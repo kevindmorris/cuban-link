@@ -1,7 +1,8 @@
 {
   "name": "the-cuban-link",
-  "version": "0.1.0",
-  "private": true,
+  "homepage": "http://kevindmorris.github.io/the-cuban-link",
+  "version": "0.0.0",
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -17,6 +18,7 @@
     "@types/react-dom": "^18.2.8",
     "axios": "^1.5.1",
     "cors": "^2.8.5",
+    "gh-pages": "^6.0.0",
     "http-proxy-middleware": "^2.0.6",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -33,7 +35,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
