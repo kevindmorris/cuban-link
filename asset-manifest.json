@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/the-cuban-link/static/js/main.3f3d6530.js",
+    "main.js": "/the-cuban-link/static/js/main.2c0f882d.js",
     "index.html": "/the-cuban-link/index.html",
-    "main.3f3d6530.js.map": "/the-cuban-link/static/js/main.3f3d6530.js.map"
+    "main.2c0f882d.js.map": "/the-cuban-link/static/js/main.2c0f882d.js.map"
   },
   "entrypoints": [
-    "static/js/main.3f3d6530.js"
+    "static/js/main.2c0f882d.js"
   ]
 }
