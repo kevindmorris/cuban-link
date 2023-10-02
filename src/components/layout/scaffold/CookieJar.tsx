@@ -36,7 +36,7 @@ function Brand() {
 function Options() {
   const dispatch = useAppDispatch();
 
-  const darkMode = useAppSelector((state) => state.global.user.darkMode);
+  const darkMode = useAppSelector((state) => state.user.darkMode);
 
   return (
     <IconButton onClick={() => dispatch(toggleTheme())}>
