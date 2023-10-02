@@ -74,15 +74,14 @@ export default function BlockPage() {
             </Typography>
           </Paper>
         </div>
-        <div style={{ flex: 2 }}>
-          <Virtuoso
-            useWindowScroll
-            data={transactions}
-            itemContent={(i, transaction) => (
-              <TransactionItem transaction={transaction} />
-            )}
-          />
-        </div>
+        <Virtuoso
+          useWindowScroll
+          data={transactions}
+          itemContent={(i, transaction) => (
+            <TransactionItem transaction={transaction} />
+          )}
+          style={{ flex: 2, marginBottom: "100px" }}
+        />
       </div>
     </React.Fragment>
   );

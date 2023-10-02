@@ -35,7 +35,8 @@ export default function TransactionItem({
         gridTemplateRows: "1fr auto",
         gridTemplateColumns: "auto 1fr 1fr 1fr auto",
         columnGap: 1,
-        m: 1,
+        mx: 1,
+        mb: 1,
         p: 1,
       }}
     >

@@ -28,7 +28,11 @@ export default function CookieJar() {
 function Brand() {
   return (
     <Link component={NavLink} to="/" underline="hover">
-      The Cuban Link
+      <img
+        src={"/assets/cuban-link-logo.png"}
+        alt="The Cuban Link"
+        style={{ height: 40 }}
+      />
     </Link>
   );
 }
