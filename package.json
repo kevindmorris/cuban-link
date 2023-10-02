@@ -1,8 +1,8 @@
 {
   "name": "the-cuban-link",
-  "homepage": "https://kevindmorris.github.io/the-cuban-link",
   "version": "0.0.0",
-  "private": false,
+  "homepage": "https://kevindmorris.github.io/the-cuban-link/",
+  "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
