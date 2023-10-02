@@ -7,15 +7,15 @@ export default function LandingPage() {
   const date = moment().valueOf();
 
   React.useEffect(() => {
-    (async () => {
-      try {
-        console.log(date);
-        const response = await api.getBlocksByDate(date);
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    // (async () => {
+    //   try {
+    //     console.log(date);
+    //     const response = await api.getBlocksByDate(date);
+    //     console.log(response);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })();
   }, [date]);
   return <div>LandingPage</div>;
 }
