@@ -48,6 +48,8 @@ function Options() {
 const StyledAppBar = styled((props: AppBarProps) => (
   <AppBar position="sticky" {...props} />
 ))(({ theme }) => ({
+  height: 50,
+  boxSizing: "border-box",
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   boxShadow: "none",

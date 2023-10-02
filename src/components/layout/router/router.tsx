@@ -1,4 +1,4 @@
-import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { RouteObject, createHashRouter } from "react-router-dom";
 import AppFrame from "../AppFrame";
 import LandingPage from "../../pages/landing/LandingPage";
 import BlockPage from "../../pages/block/BlockPage";
@@ -11,13 +11,13 @@ const routes: RouteObject[] = [
     element: <AppFrame />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "/block/:id", element: <BlockPage /> },
-      { path: "/address/:id", element: <AddressPage /> },
-      { path: "/transaction/:id", element: <TransactionPage /> },
+      { path: "/block/:hash", element: <BlockPage /> },
+      { path: "/address/:hash", element: <AddressPage /> },
+      { path: "/transaction/:hash", element: <TransactionPage /> },
     ],
   },
 ];
 
-const router = createBrowserRouter(routes);
+const router = createHashRouter(routes);
 
 export default router;

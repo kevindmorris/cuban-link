@@ -5,10 +5,25 @@ export default class BlockApi {
     return new _BaseApi();
   }
 
-  async getBlocksByDate(date: number): Promise<any> {
+  async getLatestBlock(): Promise<any> {
     let response = await this.baseApi().axios.get(
-      this.baseApi().base + `/blocks/${date}?format=json`,
-      { headers: { "Access-Control-Allow-Origin": "*" } }
+      `https://chain.api.btc.com/v3/block/latest`,
+      {
+        headers: {},
+        params: {},
+      }
+    );
+
+    return response.data;
+  }
+
+  async getBlock(hash: string): Promise<any> {
+    let response = await this.baseApi().axios.get(
+      this.baseApi().base + `/rawblock/${hash}`,
+      {
+        headers: {},
+        params: {},
+      }
     );
 
     return response.data;

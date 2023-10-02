@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { useAppSelector } from "./state/hooks";
 import { darkTheme, lightTheme } from "./theme/theme";
 import router from "./components/layout/router/router";
+import { SnackbarProvider } from "notistack";
 
 export default function App() {
   const darkMode = useAppSelector((state) => state.user.darkMode);
@@ -13,7 +14,9 @@ export default function App() {
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <RouterProvider router={router} />
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
       </ThemeProvider>
     </React.Fragment>
   );
