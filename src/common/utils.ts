@@ -18,8 +18,13 @@ export const copyContent = async (text: string) => {
 export const formatAmount = (amount?: number) =>
   amount?.toLocaleString("en-US", {
     style: "decimal",
-    minimumFractionDigits: 10,
-    maximumFractionDigits: 10,
+    minimumFractionDigits: 8,
+    maximumFractionDigits: 8,
+  });
+
+export const formatValue = (value?: number) =>
+  value?.toLocaleString("en-US", {
+    style: "decimal",
   });
 
 export const formatDate = (date?: number) =>

@@ -13,27 +13,28 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { toggleTheme } from "../../../state/slices/userSlice";
 import { NavLink } from "react-router-dom";
+import Brand from "./Brand";
+import Search from "./Search";
 
 export default function CookieJar() {
   return (
     <StyledAppBar>
       <StyledToolBar>
-        <Brand />
-        <Options />
+        <div
+          style={{
+            minWidth: "max-content",
+            flex: 1,
+            display: "flex",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Brand />
+        </div>
+        <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Options />
+        </div>
       </StyledToolBar>
     </StyledAppBar>
-  );
-}
-
-function Brand() {
-  return (
-    <Link component={NavLink} to="/" underline="hover">
-      <img
-        src={"/assets/cuban-link-logo.png"}
-        alt="The Cuban Link"
-        style={{ height: 40 }}
-      />
-    </Link>
   );
 }
 

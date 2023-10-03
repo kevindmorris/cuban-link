@@ -1,8 +1,10 @@
+import AddressApi from "./apis/AddressApi";
 import BlockApi from "./apis/BlockApi";
+import TransactionApi from "./apis/TransactionApi";
 
 export class Api {}
 
-export interface Api extends BlockApi {}
+export interface Api extends AddressApi, BlockApi, TransactionApi {}
 
 function applyMixins(derivedCtor: any, constructors: any[]) {
   constructors.forEach((baseCtor) => {
@@ -17,4 +19,4 @@ function applyMixins(derivedCtor: any, constructors: any[]) {
   });
 }
 
-applyMixins(Api, [BlockApi]);
+applyMixins(Api, [AddressApi, BlockApi, TransactionApi]);
