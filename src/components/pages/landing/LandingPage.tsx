@@ -1,8 +1,5 @@
 import React from "react";
 import { Api } from "../../../services/Api";
-import moment from "moment";
-import { useAppDispatch } from "../../../state/hooks";
-import { getBlock } from "../../../state/slices/blockSlice";
 import {
   Box,
   Container,
@@ -13,6 +10,7 @@ import {
   styled,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../shared/LoadingSpinner";
 
 export default function LandingPage() {
   return (
@@ -21,19 +19,17 @@ export default function LandingPage() {
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
         gap: 1,
       }}
     >
       <Box sx={{ pt: 6, textAlign: "center" }}>
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h5" fontWeight="bold" gutterBottom>
           The Cuban Link
         </Typography>
-        <Typography variant="h5" noWrap={false}>
-          Explore activity on the blockchain. Select the latest block below to
-          see recent transactions or search for a specific block, address, or
-          transaction in the search bar.
+        <Typography variant="h6">
+          Explore activity on the blockchain! Select the latest block below to
+          view recent transactions.
         </Typography>
       </Box>
       <Box
@@ -49,7 +45,7 @@ export default function LandingPage() {
           <LatestBlock />
         </Divider>
       </Box>
-      <Box sx={{ pb: 1 }}>
+      <Box sx={{ pb: 1, textAlign: "center" }}>
         <Typography variant="caption">
           This application leverages data from{" "}
           <Link href="https://www.blockchain.com/explorer/api/blockchain_api">
@@ -70,10 +66,12 @@ const LatestBlock = () => {
 
   const api = new Api();
 
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [hash, setHash] = React.useState<string>("");
 
   React.useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         const response = await api.getLatestBlock();
         console.log(response.data.hash);
@@ -81,8 +79,11 @@ const LatestBlock = () => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     })();
   }, []);
+
+  if (loading || hash === "") return <LoadingSpinner />;
 
   return <StyledBlock text={hash} onClick={() => navigate(`/block/${hash}`)} />;
 };
@@ -100,9 +101,9 @@ const StyledBlock = styled(
     />
   )
 )(({ theme }) => ({
-  maxWidth: 200,
-  width: "25vw",
+  width: "max-content",
   aspectRatio: "1 / 1",
+  padding: theme.spacing(1),
   color: theme.palette.text.disabled,
   background: `linear-gradient(to left top, ${alpha(
     theme.palette.warning.main,

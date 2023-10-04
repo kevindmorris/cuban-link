@@ -10,7 +10,7 @@ export default function Brand() {
       style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
     >
       <img
-        src="the-cuban-link/assets/cuban-link-logo.png"
+        src="assets/cuban-link-logo.png"
         alt=""
         style={{ height: 25 }}
       />

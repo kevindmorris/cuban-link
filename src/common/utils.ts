@@ -16,7 +16,7 @@ export const copyContent = async (text: string) => {
 };
 
 export const formatAmount = (amount?: number) =>
-  amount?.toLocaleString("en-US", {
+  (amount ? amount / 100000000 : 0)?.toLocaleString("en-US", {
     style: "decimal",
     minimumFractionDigits: 8,
     maximumFractionDigits: 8,
