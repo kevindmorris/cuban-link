@@ -1,35 +1,21 @@
-import { DarkMode, LightMode } from "@mui/icons-material";
 import {
   AppBar,
   AppBarProps,
-  IconButton,
-  Link,
+  Box,
   Toolbar,
   ToolbarProps,
-  Typography,
   styled,
 } from "@mui/material";
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../state/hooks";
-import { toggleTheme } from "../../../state/slices/userSlice";
-import { NavLink } from "react-router-dom";
 import Brand from "./Brand";
-import Search from "./Search";
+import Options from "./Options";
 
 export default function CookieJar() {
   return (
     <StyledAppBar>
       <StyledToolBar>
-        <div
-          style={{
-            minWidth: "max-content",
-            flex: 1,
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
-        >
+        <StyledBox>
           <Brand />
-        </div>
+        </StyledBox>
         <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
           <Options />
         </div>
@@ -38,22 +24,10 @@ export default function CookieJar() {
   );
 }
 
-function Options() {
-  const dispatch = useAppDispatch();
-
-  const darkMode = useAppSelector((state) => state.user.darkMode);
-
-  return (
-    <IconButton onClick={() => dispatch(toggleTheme())}>
-      {darkMode ? <DarkMode /> : <LightMode />}
-    </IconButton>
-  );
-}
-
 const StyledAppBar = styled((props: AppBarProps) => (
-  <AppBar position="sticky" {...props} />
+  <AppBar position="fixed" {...props} />
 ))(({ theme }) => ({
-  height: 50,
+  height: 45,
   boxSizing: "border-box",
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
@@ -63,5 +37,21 @@ const StyledAppBar = styled((props: AppBarProps) => (
   borderColor: theme.palette.divider,
 }));
 const StyledToolBar = styled((props: ToolbarProps) => (
-  <Toolbar variant="dense" {...props} />
-))(({ theme }) => ({ justifyContent: "space-between" }));
+  <Toolbar variant="dense" disableGutters {...props} />
+))(({ theme }) => ({
+  height: "100%",
+  minHeight: 0,
+  padding: theme.spacing(0, 1),
+  justifyContent: "space-between",
+}));
+const StyledBox = styled(Box)(({ theme }) => ({
+  flex: 1,
+  minWidth: "max-content",
+  display: "flex",
+  justifyContent: "flex-start",
+  flexDirection: "row",
+  [theme.breakpoints.up("sm")]: {
+    flexDirection: "row-reverse",
+    justifyContent: "flex-end",
+  },
+}));

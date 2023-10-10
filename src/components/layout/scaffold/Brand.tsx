@@ -9,13 +9,13 @@ export default function Brand() {
       onClick={() => navigate("/")}
       style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
     >
-      <img
-        src="assets/cuban-link-logo.png"
-        alt=""
-        style={{ height: 25 }}
-      />
-      <Typography fontSize="25px" fontWeight="bolder" ml={0.5}>
-        Cuban Link
+      <Typography
+        variant="h5"
+        fontWeight="normal"
+        fontFamily="Century Gothic"
+        textTransform="uppercase"
+      >
+        Cuban<span style={{ fontWeight: "bold" }}>Link</span>
       </Typography>
     </div>
   );

@@ -1,16 +1,8 @@
-import React from "react";
+import { Box, Container, Link, Paper, Stack, Typography } from "@mui/material";
 import { Api } from "../../../services/Api";
-import {
-  Box,
-  Container,
-  Divider,
-  Link,
-  Typography,
-  alpha,
-  styled,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import LoadingSpinner from "../../shared/LoadingSpinner";
+import { NavLink } from "react-router-dom";
 
 export default function LandingPage() {
   return (
@@ -19,54 +11,57 @@ export default function LandingPage() {
         flex: 1,
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
         gap: 1,
+        textAlign: "center",
       }}
     >
-      <Box sx={{ pt: 6, textAlign: "center" }}>
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          The Cuban Link
-        </Typography>
-        <Typography variant="h6">
-          Explore activity on the blockchain! Select the latest block below to
-          view recent transactions.
-        </Typography>
-      </Box>
       <Box
         sx={{
           flex: 1,
-          width: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Divider flexItem>
-          <LatestBlock />
-        </Divider>
+        <LandingPageBrand />
+        <LandingPageText />
+        <LandingPageLatestBlock />
       </Box>
-      <Box sx={{ pb: 1, textAlign: "center" }}>
-        <Typography variant="caption">
-          This application leverages data from{" "}
-          <Link href="https://www.blockchain.com/explorer/api/blockchain_api">
-            Blockchain.com
-          </Link>{" "}
-          and{" "}
-          <Link href="https://explorer.btc.com/btc/adapter?type=api-doc">
-            BTC.com
-          </Link>
-        </Typography>
-      </Box>
+      <LandingPageFooter />
     </Container>
   );
 }
 
-const LatestBlock = () => {
-  const navigate = useNavigate();
-
+const LandingPageBrand = () => (
+  <Typography
+    sx={(theme) => ({
+      fontFamily: "Century Gothic",
+      textTransform: "uppercase",
+      fontSize: "50px",
+      [theme.breakpoints.between("sm", "md")]: {
+        fontSize: "75px",
+      },
+      [theme.breakpoints.up("md")]: {
+        fontSize: "100px",
+      },
+    })}
+  >
+    Cuban<span style={{ fontWeight: "bold" }}>Link</span>
+  </Typography>
+);
+const LandingPageText = () => (
+  <Typography fontStyle="italic" paragraph>
+    Welcome to the Cuban Link! Explore blocks, addresses, and transactions on
+    the bitcoin blockchain.
+  </Typography>
+);
+const LandingPageLatestBlock = () => {
   const api = new Api();
 
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const [hash, setHash] = React.useState<string>("");
 
   React.useEffect(() => {
@@ -83,42 +78,33 @@ const LatestBlock = () => {
     })();
   }, []);
 
-  if (loading || hash === "") return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
 
-  return <StyledBlock text={hash} onClick={() => navigate(`/block/${hash}`)} />;
+  if (!hash)
+    return (
+      <Typography fontStyle="italic" paragraph>
+        Latest block is not availible
+      </Typography>
+    );
+
+  return (
+    <Typography fontStyle="italic" paragraph>
+      Click here to view the latest block:{" "}
+      <Link component={NavLink} to={`/block/${hash}`}>
+        {hash}
+      </Link>
+    </Typography>
+  );
 };
-
-const StyledBlock = styled(
-  (
-    props: { text: string } & React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLDivElement>,
-      HTMLDivElement
-    >
-  ) => (
-    <div
-      {...props}
-      children={props.text.slice(0, 5) + "-" + props.text.slice(-5)}
-    />
-  )
-)(({ theme }) => ({
-  width: "max-content",
-  aspectRatio: "1 / 1",
-  padding: theme.spacing(1),
-  color: theme.palette.text.disabled,
-  background: `linear-gradient(to left top, ${alpha(
-    theme.palette.warning.main,
-    0.75
-  )}, ${alpha(theme.palette.error.main, 1)})`,
-  borderRadius: theme.spacing(0.5),
-  cursor: "pointer",
-  transition: "all 0.25s ease",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  ...theme.typography.h6,
-  [`&:hover`]: {
-    maxWidth: 225,
-    width: "35vw",
-    ...theme.typography.h5,
-  },
-}));
+const LandingPageFooter = () => (
+  <Typography fontSize="10px" p={1}>
+    This application leverages data from{" "}
+    <Link href="https://www.blockchain.com/explorer/api/blockchain_api">
+      Blockchain.com
+    </Link>{" "}
+    and{" "}
+    <Link href="https://explorer.btc.com/btc/adapter?type=api-doc">
+      BTC.com
+    </Link>
+  </Typography>
+);
