@@ -55,10 +55,11 @@ export interface AddressObject {
 export interface BlockObject {
   hash: string;
   ver: number;
-  prev_block: string;
   mrkl_root: string;
   time: number;
   bits: number;
+  prev_block?: string;
+  next_block?: string[];
   nonce: number;
   n_tx: number;
   size: number;

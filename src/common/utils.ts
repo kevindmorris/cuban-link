@@ -30,5 +30,7 @@ export const formatValue = (value?: number) =>
 export const formatDate = (date?: number) =>
   moment(date ? date * 1000 : 0).format("MM/DD/yyyy, hh:mm:ss");
 
-export const formatHash = (hash: string) =>
-  hash.slice(0, 5) + "-" + hash.slice(-5);
+export const formatHash = (hash?: string) => {
+  if (!hash) return null;
+  return hash.slice(0, 5) + "-" + hash.slice(-5);
+};

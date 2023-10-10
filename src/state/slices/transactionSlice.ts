@@ -4,25 +4,25 @@ import { Api } from "../../services/Api";
 
 interface State {
   status: "idle" | "loading" | "successed" | "failed";
-  transaction: TransactionObject | null;
+  base: TransactionObject | null;
 }
 
 const initialState: State = {
   status: "idle",
-  transaction: null,
+  base: null,
 };
 
 const api = new Api();
 
 export const getTransaction = createAsyncThunk(
   "transaction/getTransaction",
-  async ({ hash }: { hash: string }) => {
+  async (id: string) => {
     try {
-      const response = await api.getTransaction(hash);
+      const response = await api.getTransaction(id);
       return response;
     } catch (error) {
       console.log(error);
-      return initialState.transaction;
+      return initialState.base;
     }
   }
 );
@@ -36,7 +36,7 @@ export const transactionSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(getTransaction.fulfilled, (state, action) => {
-      state.transaction = action.payload;
+      state.base = action.payload;
       state.status = "idle";
     });
     builder.addCase(getTransaction.rejected, (state) => {

@@ -4,7 +4,7 @@ import React from "react";
 import LoadingSpinner from "../../shared/LoadingSpinner";
 import { NavLink } from "react-router-dom";
 import { BlockObject } from "../../../common/types";
-import { formatHash } from "../../../common/utils";
+import { formatHash, formatValue } from "../../../common/utils";
 import { orange } from "@mui/material/colors";
 
 export default function LandingPage() {
@@ -65,14 +65,14 @@ const LandingPageLatestBlock = () => {
   const api = new Api();
 
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [block, setBlock] = React.useState<BlockObject>();
+  const [latestBlock, setLatestBlock] = React.useState<string>();
 
   React.useEffect(() => {
     (async () => {
       setLoading(true);
       try {
         const response = await api.getLatestBlock();
-        setBlock(response);
+        setLatestBlock(response);
       } catch (error) {
         console.log(error);
       }
@@ -82,7 +82,7 @@ const LandingPageLatestBlock = () => {
 
   if (loading) return <LoadingSpinner noFlex />;
 
-  if (!block)
+  if (!latestBlock)
     return (
       <Typography fontStyle="italic" paragraph>
         The latest block is not availible.
@@ -91,9 +91,14 @@ const LandingPageLatestBlock = () => {
 
   return (
     <Typography fontStyle="italic" paragraph>
-      Click here to view the "Genesis" block:{" "}
-      <Link component={NavLink} to={`/block/${block.hash}`} color={orange[500]}>
-        {formatHash(block.hash)}
+      Click here to view the latest block:{" "}
+      <Link
+        component={NavLink}
+        to={`/block/${latestBlock}`}
+        fontStyle="normal"
+        color={orange[500]}
+      >
+        #{latestBlock}
       </Link>
     </Typography>
   );

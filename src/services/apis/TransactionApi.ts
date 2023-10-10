@@ -6,9 +6,9 @@ export default class TransactionApi {
     return new _BaseApi();
   }
 
-  async getTransaction(hash: string): Promise<TransactionObject> {
+  async getTransaction(id: string): Promise<TransactionObject> {
     let response = await this.baseApi().axios.get(
-      this.baseApi().base + `/rawtx/${hash}`,
+      this.baseApi().base + `/rawtx/${id}`,
       {
         headers: {},
         params: {},

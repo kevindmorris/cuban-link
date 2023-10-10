@@ -27,6 +27,7 @@ export default function CookieJar() {
 const StyledAppBar = styled((props: AppBarProps) => (
   <AppBar position="fixed" {...props} />
 ))(({ theme }) => ({
+  top: 0,
   height: 45,
   boxSizing: "border-box",
   backgroundColor: theme.palette.background.paper,
