@@ -18,6 +18,7 @@ const PaperBackground = styled((props: PaperProps) => (
   <Paper square elevation={0} {...props} />
 ))(({ theme }) => ({
   minHeight: "100vh",
+  paddingTop: 45,
   display: "flex",
   flexDirection: "column",
   backgroundColor:

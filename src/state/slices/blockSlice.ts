@@ -5,25 +5,25 @@ import { Api } from "../../services/Api";
 
 interface State {
   status: "idle" | "loading" | "successed" | "failed";
-  block: BlockObject | null;
+  base: BlockObject | null;
 }
 
 const initialState: State = {
   status: "idle",
-  block: null,
+  base: null,
 };
 
 const api = new Api();
 
 export const getBlock = createAsyncThunk(
   "block/getBlock",
-  async ({ hash }: { hash: string }) => {
+  async (id: string) => {
     try {
-      const response = await api.getBlock(hash);
+      const response = await api.getBlock(id);
       return response;
     } catch (error) {
       console.log(error);
-      return initialState.block;
+      return initialState.base;
     }
   }
 );
@@ -37,7 +37,7 @@ export const blockSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(getBlock.fulfilled, (state, action) => {
-      state.block = action.payload;
+      state.base = action.payload;
       state.status = "idle";
     });
     builder.addCase(getBlock.rejected, (state) => {

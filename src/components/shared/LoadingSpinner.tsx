@@ -1,16 +1,16 @@
 import { CircularProgress } from "@mui/material";
 
-export default function LoadingSpinner() {
+export default function LoadingSpinner({ noFlex }: { noFlex?: boolean }) {
   return (
     <div
       style={{
-        flex: 1,
+        flex: noFlex ? undefined : 1,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <CircularProgress />
+      <CircularProgress color="inherit" />
     </div>
   );
 }

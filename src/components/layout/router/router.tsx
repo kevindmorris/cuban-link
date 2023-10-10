@@ -1,6 +1,7 @@
 import { RouteObject, createHashRouter } from "react-router-dom";
 import AppFrame from "../AppFrame";
 import LandingPage from "../../pages/landing/LandingPage";
+import BlockPage from "../../pages/block/BlockPage";
 
 const routes: RouteObject[] = [
   {
@@ -8,9 +9,9 @@ const routes: RouteObject[] = [
     element: <AppFrame />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "/block/:hash", element: <div>block</div> },
-      { path: "/address/:hash", element: <div>address</div> },
-      { path: "/tx/:hash", element: <div>tx</div> },
+      { path: "/block/:id", element: <BlockPage /> },
+      { path: "/address/:id", element: <div>address</div> },
+      { path: "/tx/:id", element: <div>tx</div> },
     ],
   },
 ];

@@ -3,6 +3,9 @@ import { Api } from "../../../services/Api";
 import React from "react";
 import LoadingSpinner from "../../shared/LoadingSpinner";
 import { NavLink } from "react-router-dom";
+import { BlockObject } from "../../../common/types";
+import { formatHash } from "../../../common/utils";
+import { orange } from "@mui/material/colors";
 
 export default function LandingPage() {
   return (
@@ -62,15 +65,14 @@ const LandingPageLatestBlock = () => {
   const api = new Api();
 
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [hash, setHash] = React.useState<string>("");
+  const [block, setBlock] = React.useState<BlockObject>();
 
   React.useEffect(() => {
     (async () => {
       setLoading(true);
       try {
         const response = await api.getLatestBlock();
-        console.log(response.data.hash);
-        setHash(response.data.hash);
+        setBlock(response);
       } catch (error) {
         console.log(error);
       }
@@ -78,20 +80,20 @@ const LandingPageLatestBlock = () => {
     })();
   }, []);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner noFlex />;
 
-  if (!hash)
+  if (!block)
     return (
       <Typography fontStyle="italic" paragraph>
-        Latest block is not availible
+        The latest block is not availible.
       </Typography>
     );
 
   return (
     <Typography fontStyle="italic" paragraph>
-      Click here to view the latest block:{" "}
-      <Link component={NavLink} to={`/block/${hash}`}>
-        {hash}
+      Click here to view the "Genesis" block:{" "}
+      <Link component={NavLink} to={`/block/${block.hash}`} color={orange[500]}>
+        {formatHash(block.hash)}
       </Link>
     </Typography>
   );
