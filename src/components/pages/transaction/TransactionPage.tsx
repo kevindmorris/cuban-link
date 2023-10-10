@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks";
 import { getTransaction } from "../../../state/slices/transactionSlice";
 import LoadingSpinner from "../../shared/LoadingSpinner";
@@ -10,6 +10,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  MenuItem,
   Typography,
 } from "@mui/material";
 import { green, orange, purple } from "@mui/material/colors";
@@ -147,31 +148,11 @@ const From = () => {
       <Typography fontWeight="bold">From</Typography>
       <List dense disablePadding>
         {tx?.inputs.map((e, i) => (
-          <ListItem key={i} dense disablePadding disableGutters>
-            <Box
-              sx={{
-                width: 25,
-                height: 25,
-                borderRadius: 1,
-                backgroundColor: green[400],
-                mr: 1,
-              }}
-            />
-            <ListItemText
-              primary={e.prev_out.addr}
-              secondary={formatAmount(e.prev_out.value) + " BTC"}
-              primaryTypographyProps={{
-                variant: "body1",
-                color: "text.primary",
-                noWrap: true,
-              }}
-              secondaryTypographyProps={{
-                variant: "body1",
-                color: "text.secondary",
-              }}
-              sx={{ flex: 1 }}
-            />
-          </ListItem>
+          <Address
+            key={i}
+            address={e.prev_out.addr}
+            amount={e.prev_out.value}
+          />
         ))}
       </List>
     </React.Fragment>
@@ -185,33 +166,45 @@ const To = () => {
       <Typography fontWeight="bold">To</Typography>
       <List dense disablePadding>
         {tx?.out.map((e, i) => (
-          <ListItem key={i} dense disablePadding disableGutters>
-            <Box
-              sx={{
-                width: 25,
-                height: 25,
-                borderRadius: 1,
-                backgroundColor: green[400],
-                mr: 1,
-              }}
-            />
-            <ListItemText
-              primary={e.addr}
-              secondary={formatAmount(e.value) + " BTC"}
-              primaryTypographyProps={{
-                variant: "body1",
-                color: "text.primary",
-                noWrap: true,
-              }}
-              secondaryTypographyProps={{
-                variant: "body1",
-                color: "text.secondary",
-              }}
-              sx={{ flex: 1 }}
-            />
-          </ListItem>
+          <Address key={i} address={e.addr} amount={e.value} />
         ))}
       </List>
     </React.Fragment>
+  );
+};
+const Address = ({ address, amount }: { address?: string; amount: number }) => {
+  const navigate = useNavigate();
+
+  return (
+    <MenuItem
+      dense
+      onClick={() => (address ? navigate(`/address/${address}`) : undefined)}
+    >
+      <Box
+        sx={{
+          width: 25,
+          height: 25,
+          borderRadius: 1,
+          backgroundColor: green[400],
+          mr: 1,
+        }}
+      />
+      <ListItemText
+        primary={
+          address ? <Link color={green[400]}>{address}</Link> : "Unknown"
+        }
+        secondary={formatAmount(amount) + " BTC"}
+        primaryTypographyProps={{
+          variant: "body1",
+          color: "text.primary",
+          noWrap: true,
+        }}
+        secondaryTypographyProps={{
+          variant: "body1",
+          color: "text.secondary",
+        }}
+        sx={{ flex: 1 }}
+      />
+    </MenuItem>
   );
 };

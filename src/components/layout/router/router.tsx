@@ -3,6 +3,7 @@ import AppFrame from "../AppFrame";
 import LandingPage from "../../pages/landing/LandingPage";
 import BlockPage from "../../pages/block/BlockPage";
 import TransactionPage from "../../pages/transaction/TransactionPage";
+import AddressPage from "../../pages/address/AddressPage";
 
 const routes: RouteObject[] = [
   {
@@ -11,7 +12,7 @@ const routes: RouteObject[] = [
     children: [
       { index: true, element: <LandingPage /> },
       { path: "/block/:id", element: <BlockPage /> },
-      { path: "/address/:id", element: <div>address</div> },
+      { path: "/address/:id", element: <AddressPage /> },
       { path: "/tx/:id", element: <TransactionPage /> },
     ],
   },

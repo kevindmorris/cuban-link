@@ -1,53 +1,47 @@
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../state/hooks";
+import { getAddress } from "../../../state/slices/addressSlice";
+import LoadingSpinner from "../../shared/LoadingSpinner";
 import {
   Box,
   Container,
   Divider,
-  IconButton,
   Link,
   List,
-  ListItem,
   ListItemText,
   MenuItem,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../state/hooks";
-import { getBlock } from "../../../state/slices/blockSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import LoadingSpinner from "../../shared/LoadingSpinner";
-import { orange, purple } from "@mui/material/colors";
+import { green, purple } from "@mui/material/colors";
 import {
   formatAmount,
   formatDate,
   formatHash,
   formatValue,
 } from "../../../common/utils";
-import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import { TransactionObject } from "../../../common/types";
-import ReactPaginate from "react-paginate";
 import _ from "lodash";
+import { NavigateBefore, NavigateNext } from "@mui/icons-material";
+import ReactPaginate from "react-paginate";
 
-export default function BlockPage() {
+export default function AddressPage() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const status = useAppSelector((state) => state.block.status);
+  const status = useAppSelector((state) => state.address.status);
 
   React.useEffect(() => {
-    if (id) dispatch(getBlock(id));
+    if (id) dispatch(getAddress(id));
   }, [id]);
 
   if (status === "loading") return <LoadingSpinner />;
 
   return (
     <Container sx={{ py: 1, display: "flex", flexDirection: "column", gap: 1 }}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Square />
-        <BlockNavigation />
-      </div>
+      <Square />
       <Hero />
       <Details />
-      <Summary />
       <Transactions />
     </Container>
   );
@@ -60,61 +54,25 @@ const Square = () => {
         width: 75,
         height: 75,
         borderRadius: 1,
-        backgroundColor: orange[400],
+        backgroundColor: green[400],
       }}
     />
   );
 };
-const BlockNavigation = () => {
-  const navigate = useNavigate();
-
-  const block = useAppSelector((state) => state.block.base);
-
-  const prevBlock =
-    block?.prev_block !==
-    "0000000000000000000000000000000000000000000000000000000000000000"
-      ? block?.prev_block
-      : null;
-  const nextBlock =
-    block?.next_block && block.next_block.length > 0
-      ? block?.next_block[0]
-      : null;
-
-  return (
-    <div style={{ marginTop: "auto", marginLeft: "auto" }}>
-      {prevBlock ? (
-        <IconButton
-          onClick={() => navigate(`/block/${prevBlock}`)}
-          sx={{ backgroundColor: "action.hover" }}
-        >
-          <NavigateBefore />
-        </IconButton>
-      ) : null}
-      {nextBlock ? (
-        <IconButton
-          onClick={() => navigate(`/block/${nextBlock}`)}
-          sx={{ ml: 0.5, backgroundColor: "action.hover" }}
-        >
-          <NavigateNext />
-        </IconButton>
-      ) : null}
-    </div>
-  );
-};
 
 const Hero = () => {
-  const block = useAppSelector((state) => state.block.base);
+  const address = useAppSelector((state) => state.address.base);
 
   return (
     <Typography variant="h5">
-      Bitcoin Block:{" "}
-      <span style={{ fontWeight: "bold" }}>#{block?.height}</span>
+      Address:{" "}
+      <span style={{ fontWeight: "bold" }}>{formatHash(address?.address)}</span>
     </Typography>
   );
 };
 
 const Details = () => {
-  const block = useAppSelector((state) => state.block.base);
+  const address = useAppSelector((state) => state.address.base);
 
   return (
     <React.Fragment>
@@ -128,92 +86,28 @@ const Details = () => {
         }}
       >
         {[
-          { label: "Date", value: formatDate(block?.time) },
-          { label: "Size", value: formatValue(block?.size) },
-          { label: "Height", value: formatValue(block?.height) },
-          { label: "Hash", value: block?.hash },
-          { label: "Nonce", value: formatValue(block?.nonce) },
-          { label: "Bits", value: formatValue(block?.bits) },
-        ].map((e, i) => (
-          <React.Fragment key={i}>
-            <Typography gridRow={i + 1} gridColumn={1} color="text.secondary">
-              {e.label}
-            </Typography>
-            <Typography
-              gridRow={i + 1}
-              gridColumn={2}
-              sx={{ wordBreak: "break-all" }}
-            >
-              {e.value}
-            </Typography>
-          </React.Fragment>
-        ))}
-      </Box>
-    </React.Fragment>
-  );
-};
+          { label: "Address", value: address?.address },
 
-const Summary = () => {
-  const block = useAppSelector((state) => state.block.base);
-
-  const inputs = _.sumBy(block?.tx, function (e) {
-    return e.inputs.length;
-  });
-  const inputValue = _.sumBy(block?.tx, function (e) {
-    return _.sumBy(e.inputs, function (f) {
-      return f.prev_out.value;
-    });
-  });
-  const outputs = _.sumBy(block?.tx, function (e) {
-    return e.out.length;
-  });
-  const outputValue = _.sumBy(block?.tx, function (e) {
-    return _.sumBy(e.inputs, function (f) {
-      return f.prev_out.value;
-    });
-  });
-  const minted = outputValue - inputValue;
-
-  const fees = _.sumBy(block?.tx, function (e) {
-    return e.fee;
-  });
-
-  return (
-    <React.Fragment>
-      <Typography fontWeight="bold">Summary</Typography>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateRows: "auto",
-          gridTemplateColumns: "auto 1fr",
-          columnGap: 2,
-        }}
-      >
-        {[
-          { label: "Transactions", value: formatValue(block?.n_tx) },
           {
-            label: "Inputs",
-            value: formatValue(inputs),
+            label: "Total Sent",
+            value: formatAmount(address?.total_sent) + " BTC",
           },
           {
-            label: "Input Value",
-            value: formatAmount(inputValue) + " BTC",
+            label: "Total Received",
+            value: formatAmount(address?.total_received) + " BTC",
           },
           {
-            label: "Outputs",
-            value: formatValue(outputs),
+            label: "Total Volume",
+            value:
+              formatAmount(
+                address?.total_received && address.total_sent
+                  ? address?.total_received + address?.total_sent
+                  : undefined
+              ) + " BTC",
           },
           {
-            label: "Output Value",
-            value: formatAmount(outputValue) + " BTC",
-          },
-          {
-            label: "Minted",
-            value: formatAmount(minted) + " BTC",
-          },
-          {
-            label: "Fees",
-            value: formatAmount(fees) + " BTC",
+            label: "Balance",
+            value: formatAmount(address?.final_balance) + " BTC",
           },
         ].map((e, i) => (
           <React.Fragment key={i}>
@@ -235,18 +129,18 @@ const Summary = () => {
 };
 
 function Transactions({ itemsPerPage = 10 }: { itemsPerPage?: number }) {
-  const block = useAppSelector((state) => state.block.base);
+  const address = useAppSelector((state) => state.address.base);
 
   const [itemOffset, setItemOffset] = React.useState(0);
 
-  if (!block) return null;
+  if (!address) return null;
 
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = block?.tx.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(block?.tx.length / itemsPerPage);
+  const currentItems = address?.txs.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(address?.txs.length / itemsPerPage);
 
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % block?.tx.length;
+    const newOffset = (event.selected * itemsPerPage) % address?.txs.length;
     setItemOffset(newOffset);
   };
 
@@ -330,6 +224,11 @@ function TransactionsList({ current }: { current: TransactionObject[] }) {
 function Transaction({ tx }: { tx: TransactionObject }) {
   const navigate = useNavigate();
 
+  const address = useAppSelector((state) => state.address.base);
+
+  const sent = tx.inputs.find((e) => e.prev_out.addr === address?.address);
+  const received = tx.out.find((e) => e.addr === address?.address);
+
   return (
     <MenuItem
       divider
@@ -370,22 +269,21 @@ function Transaction({ tx }: { tx: TransactionObject }) {
       />
       <ListItemText
         primary={
-          formatAmount(
-            _.sumBy(tx.out, function (o) {
-              return o.value;
-            })
-          ) + " BTC"
+          sent ? "- " + formatAmount(sent?.prev_out.value) + " BTC" : undefined
         }
         secondary={
-          <React.Fragment>
-            <Typography component="span" color="error.main">
-              Fee
-            </Typography>{" "}
-            {formatValue(tx.fee)} Sats
-          </React.Fragment>
+          received ? formatAmount(received?.value) + " BTC" : undefined
         }
-        primaryTypographyProps={{ variant: "body1", color: "text.primary" }}
-        secondaryTypographyProps={{ variant: "body1", color: "text.primary" }}
+        primaryTypographyProps={{
+          variant: "body1",
+          color: "error.main",
+          fontWeight: "bold",
+        }}
+        secondaryTypographyProps={{
+          variant: "body1",
+          color: "success.main",
+          fontWeight: "bold",
+        }}
         sx={{ flex: 1, textAlign: "right" }}
       />
     </MenuItem>

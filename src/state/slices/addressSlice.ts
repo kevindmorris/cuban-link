@@ -4,25 +4,25 @@ import { Api } from "../../services/Api";
 
 interface State {
   status: "idle" | "loading" | "successed" | "failed";
-  address: AddressObject | null;
+  base: AddressObject | null;
 }
 
 const initialState: State = {
   status: "idle",
-  address: null,
+  base: null,
 };
 
 const api = new Api();
 
 export const getAddress = createAsyncThunk(
   "address/getAddress",
-  async ({ hash }: { hash: string }) => {
+  async (id: string) => {
     try {
-      const response = await api.getAddress(hash);
+      const response = await api.getAddress(id);
       return response;
     } catch (error) {
       console.log(error);
-      return initialState.address;
+      return initialState.base;
     }
   }
 );
@@ -36,7 +36,7 @@ export const addressSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(getAddress.fulfilled, (state, action) => {
-      state.address = action.payload;
+      state.base = action.payload;
       state.status = "idle";
     });
     builder.addCase(getAddress.rejected, (state) => {
