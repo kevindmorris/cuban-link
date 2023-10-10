@@ -10,9 +10,9 @@ export default function Brand() {
       style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
     >
       <Typography
-        variant="h5"
+        fontSize="30px"
         fontWeight="normal"
-        fontFamily="Century Gothic"
+        fontFamily="'Questrial', sans-serif"
         textTransform="uppercase"
       >
         Cuban<span style={{ fontWeight: "bold" }}>Link</span>

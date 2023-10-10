@@ -41,7 +41,7 @@ export default function LandingPage() {
 const LandingPageBrand = () => (
   <Typography
     sx={(theme) => ({
-      fontFamily: "Century Gothic",
+      fontFamily: "'Questrial', sans-serif",
       textTransform: "uppercase",
       fontSize: "50px",
       [theme.breakpoints.between("sm", "md")]: {
@@ -52,7 +52,8 @@ const LandingPageBrand = () => (
       },
     })}
   >
-    Cuban<span style={{ fontWeight: "bold" }}>Link</span>
+    <span>Cuban</span>
+    <span style={{ fontWeight: "bold" }}>Link</span>
   </Typography>
 );
 const LandingPageText = () => (
