@@ -1,9 +1,9 @@
 {
-  "name": "the-cuban-link",
-  "description": "A Blockchain Explorer",
-  "version": "0.0.0",
+  "name": "cuban-link",
+  "description": "Welcome to the Cuban Link! Explore blocks, addresses, and transactions on the bitcoin blockchain.",
+  "version": "1.0.0",
   "private": false,
-  "homepage": "https://kevindmorris.github.io/the-cuban-link",
+  "homepage": "https://kevindmorris.github.io/cuban-link",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
