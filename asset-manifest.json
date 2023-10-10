@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/the-cuban-link/static/css/main.3bb52aaf.css",
-    "main.js": "/the-cuban-link/static/js/main.7e56227f.js",
+    "main.css": "/the-cuban-link/static/css/main.363599db.css",
+    "main.js": "/the-cuban-link/static/js/main.88afd9e2.js",
     "index.html": "/the-cuban-link/index.html",
-    "main.3bb52aaf.css.map": "/the-cuban-link/static/css/main.3bb52aaf.css.map",
-    "main.7e56227f.js.map": "/the-cuban-link/static/js/main.7e56227f.js.map"
+    "main.363599db.css.map": "/the-cuban-link/static/css/main.363599db.css.map",
+    "main.88afd9e2.js.map": "/the-cuban-link/static/js/main.88afd9e2.js.map"
   },
   "entrypoints": [
-    "static/css/main.3bb52aaf.css",
-    "static/js/main.7e56227f.js"
+    "static/css/main.363599db.css",
+    "static/js/main.88afd9e2.js"
   ]
 }

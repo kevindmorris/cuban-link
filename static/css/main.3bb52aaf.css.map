@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.3bb52aaf.css","mappings":"yEAEA,KACE,iBACF","sources":["index.css"],"sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Inter&display=swap\");\r\n\r\nbody {\r\n  overflow-x: hidden;\r\n}\r\n"],"names":[],"sourceRoot":""}
